@@ -6,10 +6,11 @@ import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.reactivex.Single;
 import javax.inject.Inject;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
-@Secured(SecurityRule.IS_ANONYMOUS)
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/pets")
 public class PetController {
 
@@ -22,6 +23,7 @@ public class PetController {
     }
 
     @Post("/")
+    @Secured("ADMIN")
     public Single<Integer> addPet(@Body Pet pet) {
         return petService.addPet(pet);
     }
@@ -39,8 +41,14 @@ public class PetController {
     }
 
     @Delete("/{id}")
+    @Secured("ADMIN")
     public HttpStatus deletePet(@PathVariable Integer id) {
         petService.deletePet(id);
         return HttpStatus.OK;
+    }
+
+    @Get("/login")
+    public Single<String> login(Principal principal) {
+        return Single.just("Welcome to the PetStore-Service you are logged in as: "+principal.getName());
     }
 }

@@ -31,6 +31,8 @@ public class Pet {
         this.favouriteItem = favouriteItem;
     }
 
+    public Pet() {};
+
     public int get_id() {
         return _id;
     }

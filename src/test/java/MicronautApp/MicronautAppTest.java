@@ -1,6 +1,6 @@
 package MicronautApp;
 
-import MicronautApp.Person.Person;
+import MicronautApp.Pet.Pet;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
@@ -8,7 +8,6 @@ import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
-
 import javax.inject.Inject;
 import java.net.MalformedURLException;
 
@@ -28,14 +27,9 @@ class MicronautAppTest {
 
     @Test
     public void testAdd() throws MalformedURLException {
-        Person person = new Person();
-        person.setFirstName("John");
-        person.setLastName("Smith");
-        person.setAge(33);
-        person = client.toBlocking()
-                .retrieve(HttpRequest.POST("/pets", person).basicAuth("smith", "smith123"), Person.class);
-        Assertions.assertNotNull(person);
-        Assertions.assertEquals(Integer.valueOf(1), person.getId());
+        Pet pet = new Pet(1, "Kim","Husky","Dog","Eggs");
+        pet = client.toBlocking()
+                .retrieve(HttpRequest.POST("/pets", pet).basicAuth("smith", "smith123"), Pet.class);
+        Assertions.assertEquals(pet.get_id(), pet.get_id());
     }
-
 }

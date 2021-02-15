@@ -3,3 +3,11 @@ micronaut:
     name: micronautApp
   server:
     port: 8000
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: "VerySecret"
